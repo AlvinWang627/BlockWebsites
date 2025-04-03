@@ -1,0 +1,41 @@
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="popup.css">
+</head>
+
+<body>
+  <section class="title-group">
+    <div class="title">
+      Block Websites
+    </div>
+    <div>
+      <label for="enable-button">Enable Blocking</label>
+      <input type="checkbox" id="enable-button">
+    </div>
+    </div>
+  </section>
+  <hr />
+
+  <section>
+    <label for="redirect-input">Redirect URL</label>
+    <input type="text" id="redirect-input" placeholder="Enter a URL to redirect blocked sites">
+    <div class="redirect-url-group">
+      <div class="redirect-url-content"></div>
+      <button class="redirect-url-delete">X</button>
+    </div>
+    <button class="redirect-button">Set Redirect URL</button>
+  </section>
+  <hr />
+
+  <section>
+    <label for="add-input">Blocked Websites List</label>
+    <input type="text" id="add-input" placeholder="Enter a website URL to block">
+    <button class="add-block-button">Add to Block List</button>
+    <ul class="block-url-list"></ul>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
