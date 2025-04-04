@@ -3,7 +3,7 @@
   "description": "An open-source Chrome extension to block specified websites.",
   "version": "0.0.1",
   "manifest_version": 3,
-  "permissions": ["storage", "webNavigation", "scripting"],
+  "permissions": ["storage", "webNavigation"],
   "background": {
     "service_worker": "background.js"
   },
