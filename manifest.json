@@ -1,7 +1,7 @@
 {
   "name": "Block Websites",
   "description": "An open-source Chrome extension to block specified websites.",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "manifest_version": 3,
   "permissions": ["storage", "webNavigation"],
   "background": {
