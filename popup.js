@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const addRedirectInput = document.getElementById("redirect-input");
   const redirectUrlContent = document.querySelector(".redirect-url-content");
   const redirectUrlDelete = document.querySelector(".redirect-url-delete");
+  const redirectUrlGroup = document.querySelector(".redirect-url-group");
   chrome.storage.sync.get("redirectUrl", function (result) {
     const { redirectUrl } = result;
     if (redirectUrl) {
@@ -23,9 +24,10 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   addRedirectButton.addEventListener("click", () => {
-    const url = addRedirectInput.value.trim();
-    const originUrl = new URL(url).origin;
-    if (!isValidUrl(originUrl)) return;
+    const rawUrl = addRedirectInput.value.trim();
+    if (!rawUrl) return;
+    if (!isValidUrl(rawUrl)) return;
+    const originUrl = new URL(rawUrl).origin;
     redirectUrlContent.textContent = originUrl;
     chrome.storage.sync.set({ redirectUrl: originUrl });
     updateDeleteButtonVisibility();
@@ -41,9 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateDeleteButtonVisibility() {
     const hasContent = redirectUrlContent.textContent.trim().length > 0;
 
-    document.querySelector(".redirect-url-group").style.display = hasContent
-      ? "flex"
-      : "none";
+    redirectUrlGroup.style.display = hasContent ? "flex" : "none";
     redirectUrlDelete.style.display = hasContent ? "inline-block" : "none";
     addRedirectButton.style.display = hasContent ? "none" : "";
     addRedirectInput.style.display = hasContent ? "none" : "";
@@ -67,10 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function addBlockUrl() {
     const url = addInput.value.trim();
     if (!isValidUrl(url)) return;
-    if (blockUrlList.includes(url)) {
-      alert("url is already exist");
-      return;
-    }
+
     if (url) {
       addUrlToList(url);
       saveListToStorage();
@@ -80,6 +77,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function addUrlToList(url) {
     const urlOrigin = new URL(url).origin;
+    if (blockUrlList.includes(urlOrigin)) {
+      alert("URL is already in the block list.");
+      return;
+    }
     const li = document.createElement("li");
     const span = document.createElement("span");
     span.textContent = urlOrigin;
@@ -97,6 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function removeUrl(target) {
+    const url = target.firstElementChild.textContent;
+    blockUrlList = blockUrlList.filter((item) => item !== url);
     target.remove();
     saveListToStorage();
   }
@@ -109,13 +112,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function isValidUrl(url) {
-    const pattern = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/i;
-    const isValid = pattern.test(url);
-    if (!isValid) {
-      alert("not a valid url");
+    try {
+      new URL(url);
+      return true;
+    } catch (error) {
+      alert("Invalid URL");
       return false;
     }
-
-    return true;
   }
 });
