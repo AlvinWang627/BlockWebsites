@@ -1,6 +1,8 @@
 # BlockWebsites
 ![block_website_440](https://github.com/user-attachments/assets/d64392ea-4b84-41aa-b926-2de44dfe4e69)
 
+[extension chrome stroe](https://chromewebstore.google.com/detail/block-websites/npdmkaclnkaanhpmbphjbndichojafha)
+
 You can use the Block Websites Chrome extension to combat website addiction.
 
 Block Websites is open-source on GitHub, featuring a simple UI, easy operation, and security.
